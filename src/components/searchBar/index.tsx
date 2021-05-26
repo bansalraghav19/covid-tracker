@@ -9,7 +9,7 @@ interface statesDetails {
   stateName: string;
 }
 
-const SearchBar = (): JSX.Element => {
+const SearchBar = () => {
   const [showSugesstionBox, setShowSugesstionBox] = useState<Boolean>(false);
   const [searchValue, setSearchValue] = useState<string>("");
   const [searchData, setSearchData] = useState<statesDetails[]>([]);

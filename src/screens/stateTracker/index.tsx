@@ -5,43 +5,45 @@ import { useParams } from "react-router-dom";
 import { indianStates } from "../../utilities/indianStates";
 import { connect } from "react-redux";
 
-interface Props {
+interface IProps {
   covidTrackerData: any;
 }
 
-type tableData = {
-  name: string;
-  confirmed: string | null | undefined;
-  active: string | null | undefined;
-  recovered: string | null | undefined;
-  deceased: string | null | undefined;
-} | null;
+interface IState {
+  tableData: ({
+    name: string;
+    confirmed?: string;
+    active?: string;
+    recovered?: string;
+    deceased?: string;
+  } | null)[];
 
-type statisticsData = {
-  title: string;
-  count: string | null | undefined;
-};
+  statisticsData: {
+    title: string;
+    count?: string;
+  }[];
 
-type stateDetailsHashMap = {
-  [stateCode: string]: string;
-};
+  stateDetailsHashMap: {
+    [stateCode: string]: string;
+  };
 
-interface ParamTypes {
-  stateCode: string;
+  paramTypes: {
+    stateCode: string;
+  };
 }
 
-const StateTracker = ({ covidTrackerData }: Props) => {
-  const [stateData, setStateData] = useState<tableData[]>([]);
-  const [statsData, setStatsData] = useState<statisticsData[]>([]);
+const StateTracker: React.FC<IProps> = ({ covidTrackerData }) => {
+  const [stateData, setStateData] = useState<IState['tableData']>([]);
+  const [statsData, setStatsData] = useState<IState['statisticsData']>([]);
   const [isLoading, setIsLoading] = useState<Boolean>(false);
-  const params = useParams<ParamTypes>();
+  const params = useParams<IState['paramTypes']>();
 
   const [stateNamesHashMap, setStateNamesHashMap] =
-    useState<stateDetailsHashMap | null>(null);
+    useState<IState['stateDetailsHashMap'] | null>(null);
 
   useEffect(() => {
     // stateCode as key and stateName as value
-    const stateNamesHashMap: stateDetailsHashMap = {};
+    const stateNamesHashMap: IState['stateDetailsHashMap'] = {};
     indianStates?.forEach((row) => {
       stateNamesHashMap[row?.stateCode] = row?.stateName;
     });

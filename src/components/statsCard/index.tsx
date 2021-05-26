@@ -2,15 +2,13 @@ import * as React from "react";
 import { Wrapper } from "./style";
 
 interface Props {
-  cardData: statisticsData;
+  cardData: {
+    title: string;
+    count?: string;
+  };
 }
 
-type statisticsData = {
-  title: string;
-  count: string | null | undefined;
-} | undefined;
-
-const Index = ({ cardData }: Props): JSX.Element => {
+const Index: React.FC<Props> = ({ cardData }) => {
   return (
     <Wrapper>
       <div className="title">{cardData?.title?.toUpperCase()}</div>

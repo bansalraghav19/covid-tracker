@@ -4,20 +4,21 @@ import TableComponent from "../../components/tableComponent/index";
 import { indianStates } from "../../utilities/indianStates";
 import { connect } from "react-redux";
 
-interface Props {
+interface IProps {
   covidTrackerData: any;
 }
+interface IState {
+  tableData: ({
+    name: string;
+    confirmed?: string;
+    active?: string;
+    recovered?: string;
+    deceased?: string;
+  } | null)[];
+}
 
-type tableData = {
-  name: string;
-  confirmed: string | null | undefined;
-  active: string | null | undefined;
-  recovered: string | null | undefined;
-  deceased: string | null | undefined;
-} | null;
-
-const CountryTracker = ({ covidTrackerData }: Props): JSX.Element => {
-  const [countryData, setCountryData] = useState<tableData[] | null>([]);
+const CountryTracker: React.FC<IProps> = ({ covidTrackerData }) => {
+  const [countryData, setCountryData] = useState<IState["tableData"]>([]);
   const [isLoading, setIsLoading] = useState<Boolean>(false);
   useEffect(() => {
     try {

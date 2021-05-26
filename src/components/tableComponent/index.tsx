@@ -2,31 +2,27 @@ import * as React from "react";
 import StatsCards from "../statsCard/index";
 import { Wrapper } from "./style";
 
+interface IState {
+  tableData: {
+    name: string;
+    confirmed?: string;
+    active?: string;
+    recovered?: string;
+    deceased?: string;
+  } | null;
+
+  statisticsData: {
+    title: string;
+    count?: string;
+  };
+}
 interface Props {
-  trackerData: tableData[] | null;
-  statsData?: statisticsData[] | undefined;
+  trackerData: IState["tableData"][];
+  statsData?: IState["statisticsData"][];
   name: string | undefined;
 }
 
-type tableData =
-  | {
-      name: string;
-      confirmed: string | null | undefined;
-      active: string | null | undefined;
-      recovered: string | null | undefined;
-      deceased: string | null | undefined;
-    }
-  | null
-  | undefined;
-
-type statisticsData =
-  | {
-      title: string;
-      count: string | null | undefined;
-    }
-  | undefined;
-
-const TableComponent = ({ trackerData, name, statsData }: Props) => {
+const TableComponent: React.FC<Props> = ({ trackerData, name, statsData }) => {
   return (
     <Wrapper>
       <div>
@@ -34,7 +30,7 @@ const TableComponent = ({ trackerData, name, statsData }: Props) => {
       </div>
       {statsData && statsData?.length > 0 && (
         <div className="stats-cards">
-          {statsData?.map((row: statisticsData, index) => (
+          {statsData?.map((row: IState["statisticsData"], index) => (
             <StatsCards key={index} cardData={row} />
           ))}
         </div>
@@ -52,7 +48,7 @@ const TableComponent = ({ trackerData, name, statsData }: Props) => {
             </tr>
           </thead>
           <tbody>
-            {trackerData.map((row: tableData, index) => {
+            {trackerData.map((row: IState["tableData"], index) => {
               return row ? (
                 <tr key={index}>
                   <td>{row?.name || "-"}</td>

@@ -9,7 +9,7 @@ interface Props {
   fetchCovidData: any;
 }
 
-const Index = ({ fetchCovidData }: Props): JSX.Element => {
+const Index: React.FC<Props> = ({ fetchCovidData }) => {
   const fetchData = async () => {
     try {
       await fetchCovidData();
