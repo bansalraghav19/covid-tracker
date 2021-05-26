@@ -1,12 +1,21 @@
 import * as Types from "./actionTypes";
 
+interface State {
+  data: any;
+  error: boolean;
+  isLoading: boolean;
+}
+
 const initialState = {
   data: [],
   error: false,
   isLoading: false,
 };
 
-const fetchCovidData = (state = initialState, { type, payload }) => {
+const fetchCovidData = (
+  state: State = initialState,
+  { type, payload }: { type: any; payload: any }
+) => {
   switch (type) {
     case Types.GET_COVID_DATA:
       return {

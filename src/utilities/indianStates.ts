@@ -1,11 +1,16 @@
-export const indianStates = [
+interface stateDetails {
+  stateName: string;
+  stateCode: string;
+}
+
+export const indianStates: stateDetails[] = [
   {
     stateName: "Andhra Pradesh",
-    stateCode: "AD",
+    stateCode: "AN",
   },
   {
     stateName: "Arunachal Pradesh",
-    stateCode: "AR",
+    stateCode: "AP",
   },
   {
     stateName: "Assam",
@@ -17,7 +22,7 @@ export const indianStates = [
   },
   {
     stateName: "Chattisgarh",
-    stateCode: "CG",
+    stateCode: "CT",
   },
   {
     stateName: "Delhi",
@@ -127,7 +132,7 @@ export const indianStates = [
   },
   {
     stateName: "Uttarakhand",
-    stateCode: "UK",
+    stateCode: "UT",
   },
   {
     stateName: "West Bengal",

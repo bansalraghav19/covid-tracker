@@ -4,9 +4,21 @@ import TableComponent from "../../components/tableComponent/index";
 import { indianStates } from "../../utilities/indianStates";
 import { connect } from "react-redux";
 
-const CountryTracker = ({ covidTrackerData }) => {
-  const [countryData, setCountryData] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+interface Props {
+  covidTrackerData: any;
+}
+
+type tableData = {
+  name: string;
+  confirmed: string | null | undefined;
+  active: string | null | undefined;
+  recovered: string | null | undefined;
+  deceased: string | null | undefined;
+} | null;
+
+const CountryTracker = ({ covidTrackerData }: Props): JSX.Element => {
+  const [countryData, setCountryData] = useState<tableData[] | null>([]);
+  const [isLoading, setIsLoading] = useState<Boolean>(false);
   useEffect(() => {
     try {
       setIsLoading(true);
@@ -43,7 +55,7 @@ const CountryTracker = ({ covidTrackerData }) => {
   );
 };
 
-const mapStatetoProps = (state) => ({
+const mapStatetoProps = (state: any) => ({
   covidTrackerData: state.data,
 });
 

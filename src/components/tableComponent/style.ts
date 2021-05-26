@@ -15,6 +15,7 @@ export const Wrapper = styled.div`
     border: 1px solid black;
     padding: 10px;
     width: 100%;
+    border-collapse: collapse;
   }
   tr {
     border-bottom: 1px solid black;
@@ -29,6 +30,6 @@ export const Wrapper = styled.div`
     padding: 25px;
   }
   td {
-    padding: 10px 0px 10px 20px;
+    padding: 10px 20px;
   }
 `;

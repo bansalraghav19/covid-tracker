@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { BrowserRouter } from "react-router-dom";
 import RoutesComponent from "./screens/routes/index";
 import { Provider } from "react-redux";
@@ -7,7 +7,7 @@ import "./App.css";
 
 const store = configureStore();
 
-const App = () => {
+const App = () : JSX.Element => {
   return (
     <BrowserRouter>
       <Provider store={store}>

@@ -5,16 +5,43 @@ import { useParams } from "react-router-dom";
 import { indianStates } from "../../utilities/indianStates";
 import { connect } from "react-redux";
 
-const StateTracker = ({ covidTrackerData }) => {
-  const [stateData, setStateData] = useState([]);
-  const [statsData, setStatsData] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const params = useParams();
+interface Props {
+  covidTrackerData: any;
+}
 
-  const [stateNamesHashMap, setStateNamesHashMap] = useState(null);
+type tableData = {
+  name: string;
+  confirmed: string | null | undefined;
+  active: string | null | undefined;
+  recovered: string | null | undefined;
+  deceased: string | null | undefined;
+} | null;
+
+type statisticsData = {
+  title: string;
+  count: string | null | undefined;
+};
+
+type stateDetailsHashMap = {
+  [stateCode: string]: string;
+};
+
+interface ParamTypes {
+  stateCode: string;
+}
+
+const StateTracker = ({ covidTrackerData }: Props) => {
+  const [stateData, setStateData] = useState<tableData[]>([]);
+  const [statsData, setStatsData] = useState<statisticsData[]>([]);
+  const [isLoading, setIsLoading] = useState<Boolean>(false);
+  const params = useParams<ParamTypes>();
+
+  const [stateNamesHashMap, setStateNamesHashMap] =
+    useState<stateDetailsHashMap | null>(null);
+
   useEffect(() => {
     // stateCode as key and stateName as value
-    const stateNamesHashMap = {};
+    const stateNamesHashMap: stateDetailsHashMap = {};
     indianStates?.forEach((row) => {
       stateNamesHashMap[row?.stateCode] = row?.stateName;
     });
@@ -24,11 +51,12 @@ const StateTracker = ({ covidTrackerData }) => {
   useEffect(() => {
     try {
       setIsLoading(true);
-      if (covidTrackerData?.[params?.stateCode]?.districts) {
+      if (covidTrackerData?.data?.[params?.stateCode]?.districts) {
         const allDistricts = Object?.keys(
-          covidTrackerData?.[params?.stateCode]?.districts
+          covidTrackerData?.data?.[params?.stateCode]?.districts
         );
-        const dataArray = covidTrackerData?.[params?.stateCode]?.districts;
+        const dataArray =
+          covidTrackerData?.data?.[params?.stateCode]?.districts;
         const newData = allDistricts?.map((row) => {
           if (dataArray[row]?.total) {
             return {
@@ -46,12 +74,12 @@ const StateTracker = ({ covidTrackerData }) => {
         {
           // stats cards data
           const parameters = Object?.keys(
-            covidTrackerData?.[params?.stateCode]?.total
+            covidTrackerData?.data?.[params?.stateCode]?.total
           );
           const statsArray = parameters?.map((row) => {
             return {
               title: row,
-              count: covidTrackerData?.[params?.stateCode]?.total?.[row],
+              count: covidTrackerData?.data?.[params?.stateCode]?.total?.[row],
             };
           });
           setStatsData(statsArray);
@@ -85,8 +113,8 @@ const StateTracker = ({ covidTrackerData }) => {
   );
 };
 
-const mapStatetoProps = (state) => ({
-  covidTrackerData: state.data,
+const mapStatetoProps = (state: any) => ({
+  covidTrackerData: state,
 });
 
 export default connect(mapStatetoProps, null)(StateTracker);

@@ -1,11 +1,15 @@
 import React, { useEffect } from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import CountryTracker from "../countryTracer/index";
 import StateTracker from "../stateTracker/index";
 import { connect } from "react-redux";
 import { fetchCovidData } from "../../redux/action";
 
-const Index = ({ fetchCovidData }) => {
+interface Props {
+  fetchCovidData: any;
+}
+
+const Index = ({ fetchCovidData }: Props): JSX.Element => {
   const fetchData = async () => {
     try {
       await fetchCovidData();
@@ -15,13 +19,13 @@ const Index = ({ fetchCovidData }) => {
   };
   useEffect(() => {
     fetchData();
-     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <Switch>
       <Route path="/" exact component={CountryTracker} />
       <Route path="/state/:stateCode" component={StateTracker} />
-      <Route component={CountryTracker} />
+      <Route render={() => <Redirect to="/" />} />
     </Switch>
   );
 };

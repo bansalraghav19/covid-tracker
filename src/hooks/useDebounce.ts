@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 
-const useDebounce = (value, delay) => {
+const useDebounce = (value: string, delay: number) => {
   const [bouncedValue, setBouncedValue] = useState(value);
-  const ref = useRef(null);
+  const ref = useRef<ReturnType<typeof setInterval> | null>(null);
   useEffect(() => {
     if (ref?.current) {
       clearTimeout(ref?.current);
