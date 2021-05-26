@@ -1,39 +1,38 @@
 import * as Types from "./actionTypes";
 
 interface State {
-  data: any;
+  data: Types.statesData;
   error: boolean;
   isLoading: boolean;
 }
 
-const initialState = {
-  data: [],
+const initialState: State = {
+  data: {},
   error: false,
   isLoading: false,
 };
 
 const fetchCovidData = (
   state: State = initialState,
-  { type, payload }: { type: any; payload: any }
-) => {
-  switch (type) {
+  action: Types.actionTypesDispatchType
+): State => {
+  switch (action.type) {
     case Types.GET_COVID_DATA:
       return {
         ...state,
         isLoading: true,
       };
-    case `${Types.GET_COVID_DATA}.success`:
+    case Types.GET_COVID_DATA_SUCCESS:
       return {
         ...state,
         isLoading: false,
-        data: payload.data,
+        data: action.payload.data,
         error: false,
       };
-    case `${Types.GET_COVID_DATA}.failed`:
+    case Types.GET_COVID_DATA_FAILED:
       return {
         ...state,
         isLoading: false,
-        data: payload,
         error: true,
       };
     default:

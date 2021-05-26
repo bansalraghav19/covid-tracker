@@ -4,6 +4,7 @@ import TableComponent from "../../components/tableComponent/index";
 import { useParams } from "react-router-dom";
 import { indianStates } from "../../utilities/indianStates";
 import { connect } from "react-redux";
+import { StoreInterface } from '../../redux/store/index';
 
 interface IProps {
   covidTrackerData: any;
@@ -115,7 +116,7 @@ const StateTracker: React.FC<IProps> = ({ covidTrackerData }) => {
   );
 };
 
-const mapStatetoProps = (state: any) => ({
+const mapStatetoProps = (state: StoreInterface) => ({
   covidTrackerData: state,
 });
 

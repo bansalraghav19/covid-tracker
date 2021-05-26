@@ -1,24 +1,26 @@
 import axios from "axios";
 import * as actionTypes from "./actionTypes";
-import * as actionHandlers from "../utilities/actionHanders";
+import { Dispatch } from "react";
 
-export const fetchCovidData = () => (dispatch: any) => {
-  dispatch(actionHandlers.tryHandle(actionTypes.GET_COVID_DATA));
-  return axios
-    .get(`https://api.covid19india.org/v4/min/data.min.json`)
-    .then((response) => {
-      if (response.data) {
-        dispatch(
-          actionHandlers.handleResponse(
-            actionTypes.GET_COVID_DATA_SUCCESS,
-            response.data
-          )
-        );
-      }
-    })
-    .catch((error) => {
-      dispatch(
-        actionHandlers.handleError(actionTypes.GET_COVID_DATA_FAILED, error)
-      );
+export const fetchCovidData =
+  () => async (dispatch: Dispatch<actionTypes.actionTypesDispatchType>) => {
+    dispatch({
+      type: actionTypes.GET_COVID_DATA,
     });
-};
+    try {
+      const response = await axios.get(
+        `https://api.covid19india.org/v4/min/data.min.json`
+      );
+      dispatch({
+        type: actionTypes.GET_COVID_DATA_SUCCESS,
+        payload: {
+          data: response.data,
+        },
+      });
+    } catch (error) {
+      dispatch({
+        type: actionTypes.GET_COVID_DATA_FAILED,
+        payload: { data: error },
+      });
+    }
+  };

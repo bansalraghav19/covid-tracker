@@ -3,10 +3,12 @@ import SearchBar from "../../components/searchBar/index";
 import TableComponent from "../../components/tableComponent/index";
 import { indianStates } from "../../utilities/indianStates";
 import { connect } from "react-redux";
+import { StoreInterface } from '../../redux/store/index';
 
 interface IProps {
   covidTrackerData: any;
 }
+
 interface IState {
   tableData: ({
     name: string;
@@ -56,7 +58,7 @@ const CountryTracker: React.FC<IProps> = ({ covidTrackerData }) => {
   );
 };
 
-const mapStatetoProps = (state: any) => ({
+const mapStatetoProps = (state: StoreInterface) => ({
   covidTrackerData: state.data,
 });
 
