@@ -7,7 +7,7 @@ import "./App.css";
 
 const store = configureStore();
 
-const App = () : JSX.Element => {
+const App = () => {
   return (
     <BrowserRouter>
       <Provider store={store}>
